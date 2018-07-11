@@ -1,0 +1,399 @@
+@font-face {
+	font-family: "Conv_5x7_practical";
+	src: url("fonts/5x7_practical.eot");
+	src: local("☺"), url("fonts/5x7_practical.woff") format("woff"), url("fonts/5x7_practical.ttf") format("truetype"), url("fonts/5x7_practical.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	margin: 15px auto;
+	font-family: "Leelawadee", sans-serif;
+	color: rgb(51, 51, 51);
+	width: 1200px;
+	z-index: 0;
+}
+
+p {
+	margin: 0 0 20px 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+h1, h2, h3 {
+	margin-left: 5px;
+	/* отключаем выделение */
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/*
+div {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+*/
+
+input, select {
+	width: 100%;
+}
+
+output {
+	font-weight: bold;
+}
+
+.page_header {
+	width: 100%;
+	z-index: 1;
+	border-bottom: 1px dashed  rgb(200, 200, 200);
+}
+
+.elements_section {
+	float: left;
+	margin-top: 2px;
+	width: 151px;
+	height: 700px;
+	z-index: 1;
+}
+
+.preview_section {
+	float: left;
+	margin-top: 2px;
+	width: 414px;
+	height: 700px;
+	z-index: 1;
+}
+
+.properties {
+	background-color: #fff;
+}
+
+.tools_section {
+	float: left;
+	margin-top: 4px;
+	width: 209px;
+	height: 700px;
+	z-index: 1;
+	overflow: auto;
+
+    border-right: 1px dashed  rgb(230, 230, 230);
+}
+
+.source_section {	
+	float: right;
+	margin-top: 4px;
+	width: 425px;
+	height: 700px;
+	z-index: 1;
+}
+
+#source {
+	font-family: "Courier New";
+	font-size: 16px;
+	padding-left: 10px;
+	overflow: auto;
+}
+
+.page_footer {
+	padding-top: 50px;
+	clear: both;
+	display: block;
+	text-align: center;
+	width: 100%;
+	z-index: 1;
+}
+
+.m5_view {
+	position: relative;
+	height: 414px;
+	padding: 0px;
+	margin: 0px;
+	background-image: url("images/m5_view.png");
+	background-repeat: no-repeat;
+	background-position: center; 
+	z-index: 2;
+}
+
+#m5_screen {
+	position: relative;
+	top: 77px;
+	left: 47px;
+	padding: 0px;
+	margin: 0px;
+	width: 320px;
+	height: 240px;
+	background-color: #fff;
+}
+
+/*
+#m5_button-A {
+	position: absolute;
+	margin-top: 339px;
+	margin-left: 88px;
+	width: 60px;
+	height: 38px;
+	border-radius: 3px;
+	background-color: #fff;
+	cursor: pointer;
+	z-index: 1;
+}
+*/
+
+/* Inputbox */
+.UIInputbox {
+	position: absolute;
+	top: 180px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 2px;
+	background-color: #fff;
+	z-index: 3;
+}
+
+.UIInputbox-value{
+	position: absolute;
+	top: 18px;
+	width: 100%;
+	height: 32px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(51, 51, 51);
+	border-radius: 3px;
+	background-color: #fff;
+	padding-top: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+/* UITextbox */
+.UITextbox {
+	position: absolute;
+	top: 250px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 3px;
+	background-color: rgb(252, 252, 252);
+	z-index: 3;
+}
+
+.UITextbox-value{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	border-style: solid;
+	border-width: 0px;
+	background-color: transparent;
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+/* UIWaitingbar */
+.UIWaitingbar {
+	position: absolute;
+	top: 290px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 3px;
+	background-color: #fff;
+	z-index: 3;
+}
+
+.UIWaitingbar-bar{
+	position: absolute;
+	top: 18px;
+	width: 100%;
+	height: 32px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: rgb(51, 51, 51);
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+.UIWaitingbar-bar-even {
+	float: left;
+	width: 10%;
+	height: 30px;
+	background-color: rgb(51, 51, 51);
+}
+
+.UIWaitingbar-bar-odd {
+	float: left;
+	width: 10%;
+	height: 30px;
+	background-color: rgb(255, 240, 0);
+}
+
+/* UIProgressbar */
+.UIProgressbar {
+	position: absolute;
+	top: 360px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 3px;
+	padding-top: 0px;
+	margin-top: 0px;
+	background-color: #fff;
+	z-index: 3;
+}
+
+.UIProgressbar-bar{
+	position: absolute;
+	top: 18px;
+	width: 100%;
+	height: 32px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: rgb(51, 51, 51);
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+.UIProgressbar-bar-odd {
+	float: left;
+	width: 10%;
+	height: 30px;
+	background-color: rgb(255, 240, 0);
+}
+
+/* UISelectbox */
+.UISelectbox {
+	position: absolute;
+	top: 430px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 2px;
+	background-color: #fff;
+	z-index: 3;
+}
+
+.UISelectbox-main {
+	position: absolute;
+	top: 18px;
+	width: 100%;
+	height: 32px;
+}
+
+.UISelectbox-value {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(51, 51, 51);
+	border-radius: 3px;
+	padding-top: 8px;
+	padding-left: 10px;
+	padding-right: 20px;
+    -moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+.UISelectbox-main-up {
+	position: absolute;
+	top: 4px;
+	right: 0px;
+}
+
+.UISelectbox-main-down {
+	position: absolute;
+	top: 16px;
+	right: 0px;
+}
+
+/* UICheckbox */
+.UICheckbox {
+	position: absolute;
+	top: 500px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 3px;
+	padding-top: 10px;
+	padding-left: 40px;
+	border-width: 0px;
+	z-index: 3;
+    -moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+	background-color: #fff;
+}
+
+.UICheckbox-value-box{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 32px;
+	height: 32px;
+	border: solid rgb(51, 51, 51) 1px;
+	border-radius: 3px;
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+.UICheckbox-value{
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	width: 18px;
+	height: 18px;
+	background-color: rgb(51, 51, 51);
+	border-radius: 3px;
+	-moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+}
+
+/* UIButton */
+.UIButton {
+	position: absolute;
+	top: 552px;
+	border: solid rgb(225, 225, 225) 1px;
+	border-radius: 3px;
+	z-index: 3;
+    -moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+	background-color: #fff;
+}
+
+.UIButton-icon {
+	margin-top: 3px;
+	margin-right: 5px;
+	width: 24px;
+	height: 24px;
+	float: left;
+}
+
+.UIButton-caption {
+	margin-top: 7px;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 3px;
+}
