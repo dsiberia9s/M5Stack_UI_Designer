@@ -993,9 +993,7 @@ $.widget("namespace.UIButton", {
 		// добавляем иконку, если требуется
 		if ((properties.icon != "0") && (properties.icon != ""))
 		{
-			var icon = $("<div>", {class: (class_ + "-icon")}).appendTo(element);
-			var src = "images/IconsLib/" + properties.icon + ".bmp";
-			icon.css("backgroundImage", "url(\"" + src + "\")");
+			$("<div>", {class: (class_ + "-icon")}).appendTo(element);
 		}
 		$("<div>", {class: (class_ + "-caption"), text: properties.caption}).appendTo(element); 
 
@@ -1137,6 +1135,8 @@ $.widget("namespace.UIButton", {
 		else if (key === "icon")
 		{
 			properties[key] = value;
+			var src = "images/IconsLib/" + properties.icon + ".bmp";
+			$(element).find("." + class_ + "-icon").css("backgroundImage", "url(\"" + src + "\")");
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
