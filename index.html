@@ -555,6 +555,13 @@
 			}
 			//$("#functions").val(name);
     	}
+
+    	// пока beta проверим брауз
+    	if (navigator.userAgent.indexOf("Chrome") == -1)
+    	{
+    		$("body").empty();
+    		$("body").text("Sorry.. Beta only supports Chrome browsers :(");
+    	}
     </script>
 </body>
 </html>
