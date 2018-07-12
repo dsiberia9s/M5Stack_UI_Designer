@@ -33,6 +33,7 @@
 			<article class="UISelectbox"></article>
 			<article class="UICheckbox"></article>
 			<article class="UIButton"></article>
+			<article class="UIRangebox"></article>
 		</article>
 	</section>
 
@@ -66,6 +67,22 @@
 					<td>Value</td>
 					<td colspan="2">
 						<input type="text" id="properties-value">
+					</td>
+				</tr>
+				<tr>
+					<td>min, value</td>
+					<td colspan="2">
+						<input type="text" id="properties-min">
+					</td>
+					<td>max, value</td>
+					<td colspan="2">
+						<input type="text" id="properties-max">
+					</td>
+				</tr>
+				<tr>
+					<td>step</td>
+					<td colspan="2">
+						<input type="text" id="properties-step">
 					</td>
 				</tr>
 				<tr>
@@ -170,6 +187,7 @@
 		$(".UISelectbox").UISelectbox({"blank_": true});
 		$(".UICheckbox").UICheckbox({"blank_": true});
 		$(".UIButton").UIButton({"blank_": true});
+		$(".UIRangebox").UIRangebox({"blank_": true});
 
 		// отслеживаем нажатия клавиш
 		$(document).keydown(function(e) {
@@ -369,6 +387,9 @@
 				$("#properties-caption").val(data.options.caption);
 				$("#properties-rootVar").val(data.options.rootVar);
 				$("#properties-value").val(data.options.value);
+				$("#properties-min").val(data.options.min);
+				$("#properties-max").val(data.options.max);
+				$("#properties-step").val(data.options.step);
 				$("#properties-callback").val(data.options.callback);
 				$("#properties-icon").val(data.options.icon);
 				ShowSouce();
@@ -437,7 +458,7 @@
 				that.append("<br>");
 				that.append("&nbsp;/* UI Elements */");
 				that.append("<br>");
-				/* выводим все элементы данного слоя*/
+				/* выводим все элементы данного слоя */
 				UIElementsOptions.forEach(function(option) {
 					if (option.layer == layer)
 					{
@@ -560,7 +581,7 @@
     	if (navigator.userAgent.indexOf("Chrome") == -1)
     	{
     		$("body").empty();
-    		$("body").text("Sorry.. Beta only supports Chrome browsers :(");
+    		$("body").text("Sorry.. Beta only supports Chrome browser :(");
     	}
     </script>
 </body>

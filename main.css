@@ -397,3 +397,32 @@ output {
 	font-size: 26px;
 	letter-spacing: 3px;
 }
+
+/* UIRangebox */
+.UIRangebox {
+	position: absolute;
+	top: 604px;
+	z-index: 3;
+	font-family: "Conv_5x7_practical";
+	font-size: 26px;
+	letter-spacing: 2px;
+    -moz-box-sizing: border-box; /* Для Firefox */
+	-webkit-box-sizing: border-box; /* Для Safari и Chrome */
+	box-sizing: border-box; /* Для IE и Opera */
+	background-color: #fff;
+}
+
+.UIRangebox-value-line {
+	margin-top: 16px;
+	width: 100%;
+	height: 2px;
+	float: left;
+	background-color: rgb(51, 51, 51);
+}
+
+.UIRangebox-value-box {
+	margin-top: 6px;
+	width: 3px;
+	height: 24px;
+	background-color: rgb(51, 51, 51);
+}

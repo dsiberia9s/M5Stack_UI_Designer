@@ -7,8 +7,8 @@ var Char2Height = 20;
 /* виджет UIInputbox */
 $.widget("namespace.UIInputbox", {
 	options: {
-		x: 10,
-		y: 10,
+		x: 0,
+		y: 0,
 		width: 150,
 		height: 50,
 		layer: "default",
@@ -1148,6 +1148,201 @@ $.widget("namespace.UIButton", {
 			{
 				alert("space?");
 			} 
+		}
+	},
+
+	destroy: function() {
+		this.options = null; // удаляем все свойства
+	}
+});
+
+/* виджет UIRangebox */
+$.widget("namespace.UIRangebox", {
+	options: {
+		x: 0,
+		y: 0,
+		width: 150,
+		height: 50,
+		min: 0,
+		max: 100,
+		step: 5,
+		layer: "default",
+		caption: "Rangebox", 
+		callback: "0",
+		rootVar: "0",
+		value: "75",
+		icon: "",
+		signature: "int x, int y, int width, int min, int max, int step, String layer, String caption, String* rootVar",
+		blank_: false
+	},
+
+	_create: function() {
+		var widget = this;
+		var element = this.element;
+		var properties = this.options;
+		var class_ = (element.attr("class")).split(" ")[0];
+
+		// устанавливаем размеры
+		element.css("width", properties.width);
+		element.css("height", properties.height);
+
+		// внешний вид
+		$("<div>", {class: (class_ + "-caption"), text: properties.caption + ":"}).appendTo(element); // добавляем поле caption и добавляем в него значение
+		$("<div>", {class: (class_ + "-value-line")}).appendTo(element);
+		$("<div>", {class: (class_ + "-value-box")}).appendTo(element);
+
+		this._setOption("value", properties.value);
+		this._setOption("caption", properties.caption);
+
+		// заготовке доп. свойства не нужны - выходим
+		if (properties.blank_) 
+			return; 
+
+		// выставляем координаты
+		element.css("top", properties.y);
+		element.css("left", properties.x);
+
+		// устанавливаем другие свойства
+		element.data(properties); 
+
+		// убираем лишние пробелы в signature
+		properties.signature = (properties.signature).replace(new RegExp(", ","g"), ",");
+		
+		// делаем элемент подвиждным
+		element.draggable({
+			revert: "invalid", // чтоб копию за пределами экрана не кидали
+			cursor: "move",
+			drag: function(event, ui) {
+				var X = Math.round(element.position().left);
+				var Y = Math.round(element.position().top);
+				properties.x = X;
+				properties.y = Y;
+				// если элемент брошен ниже чем высота дисплея + высота самого элемента
+				if (Y > (element.parent().height() - element.height() / 2))
+				{
+					element.trigger("eventFamily", [null, null]);
+					// прячем, затем удаляем элемент
+					element.fadeOut(300, function() {
+						element.remove();
+					});
+					return;
+				}
+				element.trigger("eventFamily", [widget, properties]); // показать свойства
+			},
+			stop: function(event, ui) {
+				element.trigger("eventFamily", [widget, properties]); // показать свойства
+			}
+		});
+
+		// клик на элемент
+		element.click(function() {
+			element.trigger("eventFamily", [widget, properties]);
+		});
+	},
+
+
+	_setOption: function(key, value) {	
+		var widget = this;
+		var element = this.element;
+		var properties = this.options;
+		var class_ = (element.attr("class")).split(" ")[0];
+
+		if (key === "x")
+		{
+			properties[key] = Math.round(value); // записываем в свойства
+			element.css("left", properties[key]); 
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "y")
+		{
+			properties[key] = Math.round(value); // записываем в свойства
+			element.css("left", properties[key]);
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "width")
+		{
+			var width = Math.round(value);
+			var maxWidth = ScreenWidth - ((width > ScreenWidth) ? (properties.x * 2) : properties.x);
+			width = (width <= maxWidth) ? width : maxWidth;
+			properties[key] = (width < 32) ? 32 : width;
+			element.css("width", properties[key]);
+			// обновим значения, чтобы текст умещался согласно параметрам
+			this._setOption("caption", properties.caption);
+			this._setOption("value", properties.value);
+		}
+
+		else if (key === "layer")
+		{
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "caption")
+		{
+			var k_ = Math.round(properties.width / Char2Width) - 1; // максимальное кол-во символов в надписи
+			properties[key] = (value.length > k_) ? value.substring(0, k_) : value;
+			$(element).find("." + class_ + "-caption").text(properties[key] + ":");
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "callback")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "value")
+		{
+			if (parseFloat(value))
+			{
+				var tmp = parseInt(value);
+				tmp = (tmp <= properties.min) ? properties.min : tmp;
+				tmp = (tmp >= properties.max) ? properties.max : tmp;
+				properties[key] = tmp;
+				var valueBoxWidth = parseInt($(element).find("." + class_ + "-value-box").css("width"));
+				var minAbs = Math.abs(properties.min);
+			    var v = tmp + minAbs;
+			    var Max = properties.max + minAbs;
+			    var x = (v * (properties.width - valueBoxWidth)) / Max;
+			    var mWidth = valueBoxWidth / 8;
+				$(element).find("." + class_ + "-value-box").css("marginLeft", x);
+			}
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "min")
+		{
+			if (parseFloat(value))
+			{
+				properties[key] = parseInt(value);
+			}
+			this._setOption("value", properties.value);
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "max")
+		{
+			if (parseFloat(value))
+			{
+				properties[key] = parseInt(value);
+			}
+			this._setOption("value", properties.value);
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
+		else if (key === "step")
+		{
+			if (parseFloat(value))
+			{
+				var tmp = parseInt(value);
+				value = ((tmp > properties.max) && (tmp < properties.max)) ? tmp : 5;
+				properties[key] = value;
+			}
+			this._setOption("value", properties.value);
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 	},
 
