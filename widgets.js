@@ -1296,20 +1296,18 @@ $.widget("namespace.UIRangebox", {
 
 		else if (key === "value")
 		{
-			if (parseFloat(value))
-			{
-				var tmp = parseInt(value);
-				tmp = (tmp <= properties.min) ? properties.min : tmp;
-				tmp = (tmp >= properties.max) ? properties.max : tmp;
-				properties[key] = tmp;
-				var valueBoxWidth = parseInt($(element).find("." + class_ + "-value-box").css("width"));
-				var minAbs = Math.abs(properties.min);
-			    var v = tmp + minAbs;
-			    var Max = properties.max + minAbs;
-			    var x = (v * (properties.width - valueBoxWidth)) / Max;
-			    var mWidth = valueBoxWidth / 8;
-				$(element).find("." + class_ + "-value-box").css("marginLeft", x);
-			}
+			var tmp = parseInt(value);
+			tmp = (tmp <= properties.min) ? properties.min : tmp;
+			tmp = (tmp >= properties.max) ? properties.max : tmp;
+			console.log("min:" + properties.min + " max " + properties.max + " value " + tmp);
+			properties[key] = tmp;
+			var valueBoxWidth = parseInt($(element).find("." + class_ + "-value-box").css("width"));
+			var minAbs = Math.abs(properties.min);
+		    var v = tmp + minAbs;
+		    var Max = properties.max + minAbs;
+		    var x = (v * (properties.width - valueBoxWidth)) / Max;
+		    var mWidth = valueBoxWidth / 8;
+			$(element).find("." + class_ + "-value-box").css("marginLeft", x);
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
