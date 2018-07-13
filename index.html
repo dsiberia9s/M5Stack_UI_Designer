@@ -454,7 +454,7 @@
 				that.append("<br>");
 				that.append("/* Function for layer " + layer + ": */");
 				that.append("<br>");
-				that.append("void LayerFunction_" + layer + "() {");
+				that.append("void LayerFunction_" + layer + "(String* rootVar) {");
 				that.append("<br>");
 				that.append("&nbsp;/* UI Elements */");
 				that.append("<br>");
@@ -486,7 +486,7 @@
 							{
 								if (x !== "0")
 								{
-									that.append("\"" + x + "\",");
+									that.append(x + ",");
 								}
 								else
 								{
@@ -512,7 +512,7 @@
 				that.append("<br>");
 				that.append("&nbsp;UILayer(\"" + layer + "\");");
 				that.append("<br>");
-				/*
+				
 				if ($("#activeLayer").val() == layer)
 				{
 					var UIEnter = $("#enterFunction").val();
@@ -522,8 +522,7 @@
 						that.append("<br>");
 					}
 				}
-				*/
-
+				
 				that.append("}");
 				that.append("<br>");
 			});
@@ -550,7 +549,7 @@
 		 	that.append("<br>");
 		 	that.append("&nbsp;UIBegin();");		
 			that.append("<br>");
-			that.append("&nbsp;LayerFunction_default();");
+			that.append("&nbsp;LayerFunction_default(0);");
 			that.append("<br>");
 			that.append("}");
 			that.append("<br>");
