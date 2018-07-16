@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
 	<meta charset="utf-8">
-	<title>M5 UI Designer</title>
+	<title>M5 UI Designer | Arduino IDE</title>
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -119,6 +119,11 @@
 						<input type="text" id="properties-icon">
 					</td>
 				</tr>
+				<tr>
+					<td>Enter key</td>
+					<td colspan="2">
+						<select type="text" id="properties-Enter"><option>0</option></select>
+					</td>
 				</tr>
 			</table>
 		</article>
@@ -147,26 +152,22 @@
 				<input class="removeLayerButton" type="image" src="images/remove_16x16.png" style="width: 16px; height: 16px;">
 			</td>
 		</tr>
-		<!--
 		<tr>
 			<td colspan="3">
-				Enter key function
+				User functions
 			</td>
 		</tr>
 		<tr style="height: 30px;">
 			<td style="width:15%; text-align: center; background-color: rgb(255,255,240);">
-				<input class="addFunctionButton" type="image" src="images/enter_16x16.png" style="width: 16px; height: 16px;">
+				<input class="addFunctionButton" type="image" src="images/function_16x16.png" style="width: 16px; height: 16px;">
 			</td>
 			<td style="text-align: center; background-color: #fafafa;">
-				<select id="enterFunction">
-					<option>0</option>
-				</select>
+				<select id="userFunctions"></select>
 			</td>
 			<td style="width:15%; text-align: center; background-color: rgb(255,240,240);">
 				<input class="removeFunctionButton" type="image" src="images/remove_16x16.png" style="width: 16px; height: 16px;">
 			</td>
 		</tr>
-		-->
 	</table>
 </section>
 
@@ -267,6 +268,7 @@
 
 		$("#properties-width, #properties-height").change(function() {});
 
+		// создаём новый слой
 		$(".addLayerButton").click(function() {
 			var newLayer = prompt("Enter the new layer name:", "");
 			if (!newLayer) return false;
@@ -286,7 +288,8 @@
 				$("#properties-layer").prepend("<option>" + newLayer + "</option>");
 			}
 			$("#activeLayer").val(newLayer);
-			newFunction("LayerFunction_" + newLayer);
+			/* создаём новую функцию слоя */
+			functions("LayerFunction_" + newLayer, "add");
 			/* "открываем" новый слой */
 			$("#activeLayer").change();
 		});
@@ -310,6 +313,7 @@
 						$("#" + id).detach();
 					}
 				});
+				functions("LayerFunction_" + $("#activeLayer").val(), "remove");
 				$("#activeLayer :selected").remove();
 			}
 			// "открываем" доступный слой
@@ -329,35 +333,31 @@
 			});
 		});
 
-/*
-		$("#enterFunction").change(function() {
-
-		});
-
-			
 		$(".addFunctionButton").click(function() {
 			
 			var newFunctionName = prompt("Enter the new function name:", "");
 			if (!newFunctionName) return false;
-			newFunction(newFunctionName);
-			
+			functions(newFunctionName, "add");
 		});
-		
+
 		$(".removeFunctionButton").click(function() {
-			if ($("#functions").val().substring(0, 14) == "LayerFunction_")
+			var functionName = $("#userFunctions").val();
+			if (functionName.substring(0, 14) == "LayerFunction_")
 			{
 				alert("You cannot delete the layer function");
 				return false;
 			}
-			// запрашиваем подтверждение на удаление слоя
-			if (confirm("Do you really want to remove the <" + $("#functions").val() + "> function?"))
+			if (confirm("Do you really want to remove the <" + functionName + "> function?"))
 			{
-				// удаляем слой из свойств элемента
-				$("#properties-callback option:contains(" + $("#functions").val() + ")").remove();
-				$("#functions :selected").remove();
+				functions(functionName, "remove");
 			}
 			// "открываем" доступный слой
-			$("#functions").change();
+			$("#userFunctions").change();
+		});
+
+		/*
+		$("#enterFunction").change(function() {
+
 		});
 		*/
 
@@ -372,6 +372,12 @@
 			var id = $(".properties").data("activeId");
 			var value = $(this).val();
 			setOption(id, "callback", value);
+		});
+
+		$("#properties-Enter").change(function() {
+			var id = $(".properties").data("activeId");
+			var value = $(this).val();
+			setOption(id, "Enter", value);
 		});
 
 		$(".GitHub").click(function() {
@@ -395,6 +401,7 @@
 				$("#properties-step").val(data.options.step);
 				$("#properties-callback").val(data.options.callback);
 				$("#properties-icon").val(data.options.icon);
+				$("#properties-Enter").val(data.options.Enter);
 				ShowSouce();
 			}
 			else
@@ -441,6 +448,12 @@
 					i++;
 				}
 			});
+			/* создадим массив пользовательских функций */
+			var UIUserFunctions = [];
+			$("#userFunctions option").each(function(index) {
+				var functionName = $(this).text();
+			    UIUserFunctions[index] = functionName;
+			});
 			/* выводим библиотеки */
 			that.append("/* After your libraries */");
 			that.append("<br>");
@@ -453,6 +466,20 @@
 			UIElementsOptions.forEach(function(option) {
 				that.append("String " + option.rootVar + " = \"" + option.value + "\";<br>");
 			});
+			if (UIUserFunctions.length > 0)
+			{
+				/* выводим пользовательские функции */
+				that.append("<br>");
+				that.append("/* User functions: */");
+				UIUserFunctions.forEach(function(functionName) {
+					that.append("<br>");
+					that.append("void " + functionName + "(String* rootVar) {");
+					that.append("<br>");
+					that.append("<br>");
+					that.append("}");
+					that.append("<br>");
+				});
+			}
 			UILayers.forEach(function(layer) {
 				that.append("<br>");
 				that.append("/* Function for layer " + layer + ": */");
@@ -509,6 +536,11 @@
 							}
 						});
 						that.append(");<br>");
+						// выводим Enter, привязанный к элементу, если имеется привязка
+						if ((option.Enter != "0") && (option.Enter != ""))
+						{
+							that.append("&nbsp;UIEnter = " + option.Enter + ";<br>");
+						}
 					}	
 				});
 				that.append("&nbsp;/* To open this layer use: */");
@@ -561,23 +593,35 @@
 			that.append("void loop() { }");
     	}
 
-    	function newFunction(name) {
-			var New = 1;
-			$("#enterFunction option").each(function(){
-				// если такой слой уже существует, то новый не создаём
-				if (this.text == name)
+    	function functions(functionName, action) {
+    		if (action == "add")
+    		{
+				var New = 1;
+				$("#userFunctions option").each(function(){
+					if (this.text == functionName)
+					{
+						$("#userFunctions").val(functionName);
+						$("#properties-callback").val(functionName);
+						$("#properties-Enter").val(functionName);
+						New = 0;
+					}
+				});
+				if (New)
 				{
-					$("#enterFunction").val(name);
-					$("#properties-callback").val(name);
-					New = 0;
+					$("#userFunctions").prepend("<option>" + functionName + "</option>");
+					$("#properties-callback").prepend("<option>" + functionName + "</option>");
+					$("#properties-Enter").prepend("<option>" + functionName + "</option>");
 				}
-			});
-			if (New)
-			{
-				$("#enterFunction").prepend("<option>" + name + "</option>");
-				$("#properties-callback").prepend("<option>" + name + "</option>");
-			}
-			//$("#functions").val(name);
+    		}
+    		else if (action == "remove")
+    		{
+    			$("#userFunctions option:contains(" + functionName + ")").remove();
+    			$("#properties-callback option:contains(" + functionName + ")").remove();
+    			$("#properties-callback").val("0");
+    			$("#properties-Enter option:contains(" + functionName + ")").remove();
+    			$("#properties-callback)").val("0");
+    		}
+    		ShowSouce();
     	}
 
     	// пока beta проверим брауз

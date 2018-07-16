@@ -17,6 +17,7 @@ $.widget("namespace.UIInputbox", {
 		rootVar: "0",
 		value: "",
 		icon: "",
+		Enter: "0",
 		signature: "int x, int y, int width, String layer, String caption, pFuncStrP callback, String* rootVar",
 		blank_: false
 	},
@@ -135,6 +136,13 @@ $.widget("namespace.UIInputbox", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+		
 		else if (key === "value")
 		{
 			var length_ = value.length;
@@ -164,6 +172,7 @@ $.widget("namespace.UITextbox", {
 		rootVar: "0",
 		value: "Textbox",
 		icon: "",
+		Enter: "0",
 		signature: "int x, int y, int width, int height, int color, String layer, String* rootVar",
 		blank_: false
 	},
@@ -295,6 +304,13 @@ $.widget("namespace.UITextbox", {
 			$(element).find("." + class_ + "-value").text(text);
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
+
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
 	},
 
 	destroy: function() {
@@ -316,6 +332,7 @@ $.widget("namespace.UIWaitingbar", {
 		rootVar: "0",
 		value: "",
 		icon: "",
+		Enter: "0",
 		signature: "int x, int y, int width, String layer, String caption, String* rootVar",
 		blank_: false
 	},
@@ -434,6 +451,13 @@ $.widget("namespace.UIWaitingbar", {
 			$(element).find("." + class_ + "-caption").text(properties[key] + ":");
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
+
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
 	},
 
 	destroy: function() {
@@ -455,6 +479,7 @@ $.widget("namespace.UIProgressbar", {
 		rootVar: "0",
 		value: "70",
 		icon: "",
+		Enter: "0",
 		/* специальные свойства виджета */
 		signature: "int x, int y, int width, String layer, String caption, String* rootVar",
 		blank_: false
@@ -587,6 +612,13 @@ $.widget("namespace.UIProgressbar", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
 		else if (key === "caption")
 		{
 			var k_ = Math.round(properties.width / Char2Width) - 2; // максимальное кол-во символов в надписи
@@ -614,6 +646,7 @@ $.widget("namespace.UISelectbox", {
 		rootVar: "0",
 		value: "",
 		icon: "",
+		Enter: "0",
 		/* специальные свойства виджета */
 		signature: "int x, int y, int width, String layer, String caption, pFuncStrP callback, String* rootVar",
 		blank_: false,
@@ -769,6 +802,13 @@ $.widget("namespace.UISelectbox", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
 		else if (key === "value")
 		{
 			/*
@@ -811,6 +851,7 @@ $.widget("namespace.UICheckbox", {
 		rootVar: "0",
 		value: "true",
 		icon: "",
+		Enter: "0",
 		signature: "int x, int y, int width, String layer, String caption, pFuncStrP callback, String* rootVar",
 		blank_: false
 	},
@@ -945,6 +986,13 @@ $.widget("namespace.UICheckbox", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
 		else if (key === "KEYBOARD_KEY_CODE")
 		{
 			var keyCode = value;
@@ -975,6 +1023,7 @@ $.widget("namespace.UIButton", {
 		rootVar: "0",
 		value: "",
 		icon: "ICON_0_24",
+		Enter: "0",
 		signature: "int x, int y, int width, String layer, String caption, uint16_t* icon, pFuncStrP callback, String* rootVar",
 		blank_: false
 	},
@@ -1132,6 +1181,13 @@ $.widget("namespace.UIButton", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
 		else if (key === "icon")
 		{
 			properties[key] = value;
@@ -1172,6 +1228,7 @@ $.widget("namespace.UIRangebox", {
 		rootVar: "0",
 		value: "75",
 		icon: "",
+		Enter: "0",
 		signature: "int x, int y, int width, int min, int max, int step, String layer, String caption, String* rootVar",
 		blank_: false
 	},
@@ -1294,12 +1351,18 @@ $.widget("namespace.UIRangebox", {
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
+		else if (key === "Enter")
+		{
+			value = (!value) ? 0 : value;
+			properties[key] = value;
+			element.trigger("eventFamily", [widget, properties]); // показать свойства
+		}
+
 		else if (key === "value")
 		{
 			var tmp = parseInt(value);
 			tmp = (tmp <= properties.min) ? properties.min : tmp;
 			tmp = (tmp >= properties.max) ? properties.max : tmp;
-			console.log("min:" + properties.min + " max " + properties.max + " value " + tmp);
 			properties[key] = tmp;
 			var valueBoxWidth = parseInt($(element).find("." + class_ + "-value-box").css("width"));
 			var minAbs = Math.abs(properties.min);
