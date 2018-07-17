@@ -472,12 +472,15 @@
 				that.append("<br>");
 				that.append("/* User functions: */");
 				UIUserFunctions.forEach(function(functionName) {
-					that.append("<br>");
-					that.append("void " + functionName + "(String* rootVar) {");
-					that.append("<br>");
-					that.append("<br>");
-					that.append("}");
-					that.append("<br>");
+					if (functionName.substring(0, 14) != "LayerFunction_")
+					{
+						that.append("<br>");
+						that.append("void " + functionName + "(String* rootVar) {");
+						that.append("<br>");
+						that.append("<br>");
+						that.append("}");
+						that.append("<br>");
+					}
 				});
 			}
 			UILayers.forEach(function(layer) {
@@ -547,18 +550,6 @@
 				that.append("<br>");
 				that.append("&nbsp;UILayer(\"" + layer + "\");");
 				that.append("<br>");
-				/*
-				if ($("#activeLayer").val() == layer)
-				{
-					var UIEnter = $("#enterFunction").val();
-					if (UIEnter != 0)
-					{
-						that.append("&nbsp;UIEnter = " + UIEnter + ";");
-						that.append("<br>");
-					}
-				}
-				*/
-				
 				that.append("}");
 				that.append("<br>");
 			});
