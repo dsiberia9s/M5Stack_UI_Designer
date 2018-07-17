@@ -611,7 +611,20 @@
     			$("#properties-callback option:contains(" + functionName + ")").remove();
     			$("#properties-callback").val("0");
     			$("#properties-Enter option:contains(" + functionName + ")").remove();
-    			$("#properties-callback)").val("0");
+    			// удаляем со свойств всех добавленных элементов
+				$("#m5_screen article").each(function(){
+					var id = $(this).attr("id");
+					var callback = getOption(id, "callback");
+					var Enter = getOption(id, "Enter");
+					if (callback == functionName)
+					{
+						setOption(id, "callback", "0");
+					}
+					if (Enter == functionName)
+					{
+						setOption(id, "Enter", "0");
+					}
+				});
     		}
     		ShowSouce();
     	}
