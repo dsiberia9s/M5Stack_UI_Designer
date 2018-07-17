@@ -336,6 +336,7 @@
 		$(".addFunctionButton").click(function() {
 			
 			var newFunctionName = prompt("Enter the new function name:", "");
+			newFunctionName = (!newFunctionName[0].match(/[a-z]/i)) ? ("_" + newFunctionName) : newFunctionName;
 			if (!newFunctionName) return false;
 			functions(newFunctionName, "add");
 		});
