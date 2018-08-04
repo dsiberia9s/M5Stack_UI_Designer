@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<title>M5 UI Designer | Arduino IDE</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<header class="page_header">
+		<table style="width: 100%;">
+			<tr>
+				<td style="width: 50%;">
+					<h1>M5 UI Designer <span style="font-size: 12pt">beta</span></h1>
+				</td>
+				<td style="width: 50px; text-align: right;">
+					<input class="GitHub" type="image" src="images/github_32x32.png" style="width: 32px; height: 32px;">
+				</td>
+			</tr>
+		</table>
+	</header>
+
+	<section class="elements_section">
+		<header>
+			<h2>Elements</h2>
+		</header>
+		<article class="elements">
+			<article class="UIInputbox"></article>
+			<article class="UITextbox"></article>
+			<article class="UIWaitingbar"></article>
+			<article class="UIProgressbar"></article>
+			<article class="UISelectbox"></article>
+			<article class="UICheckbox"></article>
+			<article class="UIButton"></article>
+			<article class="UIRangebox"></article>
+		</article>
+	</section>
+
+	<section class="preview_section">
+		<header>
+			<h2>Preview</h2>
+		</header>
+		<article class="m5_view">
+			<div id="m5_screen"></div>
+		</article>
+		<article class="properties" data-activeId="">
+			<header>
+				<h3>Properties</h3>
+			</header>
+			<table>
+				<tr>
+					<td style="font-size: 24px;">X</td>
+					<td style="text-align: center;" colspan="2">
+						<output id="properties-x" style="font-size: 24px;">-</output>
+					</td>
+					<td style="font-size: 24px;">Y</td>
+					<td style="text-align: center;" colspan="2">
+						<output id="properties-y" style="font-size: 24px;">-</output>
+					</td>
+				</tr>
+				<tr>
+					<td>Caption</td>
+					<td colspan="2">
+						<input type="text" id="properties-caption">
+					</td>
+					<td>Value</td>
+					<td colspan="2">
+						<input type="text" id="properties-value">
+					</td>
+				</tr>
+				<tr>
+					<td>min, value</td>
+					<td colspan="2">
+						<input type="text" id="properties-min">
+					</td>
+					<td>max, value</td>
+					<td colspan="2">
+						<input type="text" id="properties-max">
+					</td>
+				</tr>
+				<tr>
+					<td>step</td>
+					<td colspan="2">
+						<input type="text" id="properties-step">
+					</td>
+				</tr>
+				<tr>
+					<td>Width, px</td>
+					<td>
+						<input class="marginWidth" type="image" src="images/marginWidth.png" style="width: 16px; height: 16px;">
+					</td>
+					<td style="width: 25%;">
+						<input type="number" id="properties-width">
+					</td>
+					<td>Height, px</td>
+					<td style="width: 25%;">
+						<input type="number" id="properties-height">
+					</td>
+				</tr>
+				<tr>
+					<td>Callback</td>
+					<td colspan="2">
+						<select type="text" id="properties-callback"><option>0</option></select>
+					</td>
+					<td>Layer</td>
+					<td colspan="2">
+						<select id="properties-layer"><option>default</option></select>
+					</td>
+				</tr>
+				<tr>
+					<td>RootVar</td>
+					<td colspan="2">
+						<input type="text" id="properties-rootVar" readonly="1">
+					</td>
+					<td>Icon</td>
+					<td colspan="2">
+						<input type="text" id="properties-icon">
+					</td>
+				</tr>
+				<tr>
+					<td>Enter key</td>
+					<td colspan="2">
+						<select type="text" id="properties-Enter"><option>0</option></select>
+					</td>
+				</tr>
+			</table>
+		</article>
+	</section>
+
+<section class="tools_section">
+	<header>
+		<h2>Tools</h2>
+	</header>
+	<table style="width:100%;">
+		<tr>
+			<td colspan="3">
+				Layer
+			</td>
+		</tr>
+		<tr style="height: 30px;">
+			<td style="width:15%; text-align: center; background-color: rgb(240,240,255);">
+				<input class="addLayerButton" type="image" src="images/layer_16x16.png" style="width: 16px; height: 16px;">
+			</td>
+			<td style="text-align: center; background-color: #fafafa;">
+				<select id="activeLayer">
+					<option>default</option>
+				</select>
+			</td>
+			<td style="width:15%; text-align: center; background-color: rgb(255,240,240);">
+				<input class="removeLayerButton" type="image" src="images/remove_16x16.png" style="width: 16px; height: 16px;">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				User functions
+			</td>
+		</tr>
+		<tr style="height: 30px;">
+			<td style="width:15%; text-align: center; background-color: rgb(255,255,240);">
+				<input class="addFunctionButton" type="image" src="images/function_16x16.png" style="width: 16px; height: 16px;">
+			</td>
+			<td style="text-align: center; background-color: #fafafa;">
+				<select id="userFunctions"></select>
+			</td>
+			<td style="width:15%; text-align: center; background-color: rgb(255,240,240);">
+				<input class="removeFunctionButton" type="image" src="images/remove_16x16.png" style="width: 16px; height: 16px;">
+			</td>
+		</tr>
+	</table>
+	<table id="FM">
+		<tr>
+			<td colspan="3">
+				<h3 style="margin: 0px; padding: 0px;">Functional Modules</h3>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<ul>
+					<!-- здесь функциональные модули -->
+					<li class="FMValue"></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<ul id="FM-area"></ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<h4 style="margin: 0px; padding: 0px;">Properties</h3>
+			</td>
+		</tr>
+	</table>
+</section>
+
+<section class="source_section">
+	<header>
+		<h2>Source</h2>
+	</header>
+	<article id="source"></article>
+</section>
+
+	<footer class="page_footer">
+		<p>M5 UI Designer for Arduino IDE, 2018</p>
+	</footer>
+	<script type="text/javascript" src="widgets.js"></script>
+    <script type="text/javascript">
+		/* связываем виджет с div'ом */
+		$(".UIInputbox").UIInputbox({"blank_": true});
+		$(".UITextbox").UITextbox({"blank_": true});
+		$(".UIWaitingbar").UIWaitingbar({"blank_": true});
+		$(".UIProgressbar").UIProgressbar({"blank_": true});
+		$(".UISelectbox").UISelectbox({"blank_": true});
+		$(".UICheckbox").UICheckbox({"blank_": true});
+		$(".UIButton").UIButton({"blank_": true});
+		$(".UIRangebox").UIRangebox({"blank_": true});
+
+		$(".FMValue").FMValue();
+
+		// отслеживаем нажатия клавиш
+		$(document).keydown(function(e) {
+			var keyCode = e.which;
+			var id = $(".properties").data("activeId");
+			if (id)
+			{
+				setOption(id, "KEYBOARD_KEY_CODE", keyCode);
+			}
+		});
+
+		/* делаем все заготовки подвижными */
+    	$(".elements_section").find("article").draggable({
+    		helper: "clone",
+    		revert: "invalid", 
+    		cursor: "move"
+    	});
+		
+		$("#m5_screen").droppable({
+    		tolerance: "fit",
+			drop: function(event, ui) {
+				var class_ = ((ui.draggable).attr("class")).split(" ")[0];
+				var id = (ui.draggable).attr("id");
+				var X = -Math.round($(this).offset().left - ui.offset.left);
+				var Y = -Math.round($(this).offset().top - ui.offset.top);
+				var activeLayer = $("#activeLayer").val();
+				// если это шаблон
+				if (!id)
+				{
+					var rootVar = class_ + "_" + Math.random().toString(36).substring(6);
+					var id = "#" + rootVar;
+					var DOM = {};
+					DOM.class = class_;
+					DOM.id = rootVar;
+					eval("$(\"<article>\").appendTo(this).attr(DOM)." + class_ + "({x: X, y: Y, layer: activeLayer, rootVar: rootVar});"); // создаём новый элемент и делаем его виджетом
+					$(id).on("eventFamily", showProperties); // подписываемся на семейство событий anyEventName
+				}
+				ShowSouce();
+			}
+		});
+
+		// делаем все функц. модули подвижными
+    	$("#FM").find("li").draggable({
+    		connectToSortable: "#FM-area",
+    		helper: "clone",
+    		revert: "invalid",
+    		cursor: "move"
+    	});
+
+		$("#FM-area").sortable({
+			update: function (event, ui) {
+				var order = "";
+				$("#FM-area li").each(function() {
+					var class_ = (ui.item.context.className).split(" ")[0];
+					var id = $(this).attr("id");
+					if (!id) // если нет id у FMBox, то создадим
+					{
+						id = class_ + "_" + Math.random().toString(36).substring(6);
+						$(this).attr("id", id);
+						$(this).attr("data-userFunction", $("#userFunctions :selected").val());
+					}
+					if ($(this).attr("data-userFunction") == $("#userFunctions :selected").val())
+					{
+						
+						if (order == "")
+						{
+							order = id.replace("_", "[]=");
+						}
+						else
+						{
+							order += "&" + id.replace("_", "[]=");
+						}
+					}
+				});
+				//var order = $(this).sortable("serialize");
+				$("#userFunctions :selected").attr("data-FM", order);
+			}
+		});
+
+		// отменим возможность выделять текст внутри элементов
+		$("ul, li").disableSelection();
+
+		// когда фокус одного из свойств потерян
+		$(".properties").find("input").focusout(function() {
+			if ($(this).attr("type") == "image") return;
+			var optionName = ($(this).attr("id")).split("-")[1];
+			var id = $(".properties").data("activeId");
+			if (!id)
+			{
+				alert("You must select an Element on the screen to apply properties");
+				return;
+			}
+			var class_ = id.split("_")[0];
+			var value = $(this).val();
+			setOption(id, optionName, value);
+			//$(this).val(getOption(id, optionName)); // вернём новое значение
+		});
+
+		$(".marginWidth").click(function() {
+			var id = $(".properties").data("activeId");
+			if (!id)
+			{
+				alert("You must select an Element on the screen to apply properties");
+				return;
+			}
+			setOption(id, "width", "10000");
+		});
+
+		$("#m5_screen").dblclick(function() {
+			$(".properties").data("activeId", "");
+			showProperties();
+			ShowSouce();
+		});
+
+		$("#properties-width, #properties-height").change(function() {});
+
+		// создаём новый слой
+		$(".addLayerButton").click(function() {
+			var newLayer = prompt("Enter the new layer name:", "");
+			if (!newLayer) return false;
+			var New = 1;
+			$("#activeLayer option").each(function(){
+				// если такой слой уже существует, то новый не создаём
+				if (this.text == newLayer)
+				{
+					$("#activeLayer").val(newLayer);
+					$("#properties-layer").val(newLayer);
+					New = 0;
+				}
+			});
+			if (New)
+			{
+				$("#activeLayer").prepend("<option>" + newLayer + "</option>");
+				$("#properties-layer").prepend("<option>" + newLayer + "</option>");
+			}
+			$("#activeLayer").val(newLayer);
+			/* создаём новую функцию слоя */
+			functions("LayerFunction_" + newLayer, "add");
+			/* "открываем" новый слой */
+			$("#activeLayer").change();
+		});
+
+		$(".removeLayerButton").click(function() {
+			if ($("#activeLayer").val() == "default")
+			{
+				alert("You cannot delete the default layer");
+				return false;
+			}
+			// запрашиваем подтверждение на удаление слоя
+			if (confirm("Do you really want to remove the <" + $("#activeLayer").val() + "> layer?"))
+			{
+				// удаляем слой из свойств элемента
+				$("#properties-layer option:contains(" + $("#activeLayer").val() + ")").remove();
+				// удаляем все элементы с дисплея
+				$("#m5_screen article").each(function(){
+					var id = $(this).attr("id");
+					if (getOption(id, "layer") == $("#activeLayer").val())
+					{
+						$("#" + id).detach();
+					}
+				});
+				functions("LayerFunction_" + $("#activeLayer").val(), "remove");
+				$("#activeLayer :selected").remove();
+			}
+			// "открываем" доступный слой
+			$("#activeLayer").change();
+			ShowSouce();
+		});
+
+		$("#activeLayer").change(function() {
+			$("#m5_screen").find("article").css("zIndex", -1000); // прячем все элементы
+			var select = this;
+			$("#m5_screen article").each(function(){
+				var id = $(this).attr("id");
+				if (getOption(id, "layer") == $(select).val())
+				{
+					$("#" + id).css("zIndex", 1000);
+				}
+			});
+		});
+
+		$(".addFunctionButton").click(function() {
+			var newFunctionName = prompt("Enter the new function name:", "");
+			newFunctionName = (!newFunctionName[0].match(/[a-z]/i)) ? ("_" + newFunctionName) : newFunctionName;
+			if (!newFunctionName) return false;
+			functions(newFunctionName, "add");
+			$("#userFunctions").val(newFunctionName);
+			FM();
+		});
+
+		$(".removeFunctionButton").click(function() {
+			var functionName = $("#userFunctions").val();
+			if (!functionName)
+			{
+				alert("You cannot delete the empty function");
+				return false;
+			}
+			else if (functionName.substring(0, 14) == "LayerFunction_")
+			{
+				alert("You cannot delete the layer function");
+				return false;
+			}
+			if (confirm("Do you really want to remove the <" + functionName + "> function?"))
+			{
+				functions(functionName, "remove");
+			}
+			// "открываем" доступный слой
+			$("#userFunctions").change();
+		});
+
+		/*
+		$("#enterFunction").change(function() {
+
+		});
+		*/
+
+		$("#properties-layer").change(function() {
+			var id = $(".properties").data("activeId");
+			var value = $(this).val();
+			setOption(id, "layer", value);
+			$("#activeLayer").change();
+		});
+
+		$("#userFunctions").change(function() {
+			FM();
+		});
+
+		$("#properties-callback").change(function() {
+			var id = $(".properties").data("activeId");
+			var value = $(this).val();
+			setOption(id, "callback", value);
+		});
+
+		$("#properties-Enter").change(function() {
+			var id = $(".properties").data("activeId");
+			var value = $(this).val();
+			setOption(id, "Enter", value);
+		});
+
+		$(".GitHub").click(function() {
+			window.open("https://github.com/dsiberia9s/M5_UI");
+		});
+
+		function showProperties(obj, data) {
+			if (data) // если элемент не удален
+			{
+				$(".properties").data("activeId", data.element.context.id);
+	    		$("#properties-x").val(Math.round(data.options.x));
+				$("#properties-y").val(Math.round(data.options.y));
+				$("#properties-width").val(data.options.width);
+				$("#properties-height").val(data.options.height);
+				$("#properties-layer").val(data.options.layer);
+				$("#properties-caption").val(data.options.caption);
+				$("#properties-rootVar").val(data.options.rootVar);
+				$("#properties-value").val(data.options.value);
+				$("#properties-min").val(data.options.min);
+				$("#properties-max").val(data.options.max);
+				$("#properties-step").val(data.options.step);
+				$("#properties-callback").val(data.options.callback);
+				$("#properties-icon").val(data.options.icon);
+				$("#properties-Enter").val(data.options.Enter);
+				ShowSouce();
+			}
+			else
+			{
+				$(".properties").data("activeId", "");
+				$(".properties").find("input").val("");
+				$(".properties").find("output").val("-");
+				ShowSouce(-1);
+			}
+		}
+
+		function getOption(id, optionName) {
+			var class_ = id.split("_")[0];
+			if (optionName) // выбор определенного свойства
+				return eval("$(\"#\" + id)." + class_ + "(\"option\", \"" + optionName + "\");");
+			else // выбор всех свойств
+				return eval("$(\"#\" + id)." + class_ + "(\"option\");");
+		}
+
+		function setOption(id, optionName, value) {
+			var class_ = id.split("_")[0];
+			eval("$(\"#\" + id)." + class_ + "(\"option\", \"" + optionName + "\", \"" + value + "\");");
+		}
+
+		function ShowSouce(p) {
+			var that = $("#source");
+			/* очищаем поле с кодом */
+			$(that).text("");
+			if (p == -1) return;
+   			/* создадим массив элементов на всех слоях */
+			var UIElementsOptions = [];
+			$("#m5_screen article").each(function(index) {
+				var id = $(this).attr("id");
+			    UIElementsOptions[index] = getOption(id, null);
+			});
+			/* создадим массив слоёв */
+			var UILayers = [];
+			var i = 0;
+			UIElementsOptions.forEach(function(option) {
+				var layer = option.layer;
+				if (UILayers.indexOf(layer) == -1)
+				{
+					UILayers[i] = layer;
+					i++;
+				}
+			});
+			/* создадим массив пользовательских функций */
+			var UIUserFunctions = [];
+			$("#userFunctions option").each(function(index) {
+				var functionName = $(this).text();
+			    UIUserFunctions[index] = functionName;
+			});
+			/* выводим библиотеки */
+			that.append("/* After your libraries */");
+			that.append("<br>");
+			that.append("#include &lt;M5_UI.h&gt;");
+			that.append("<br>");
+			that.append("<br>");
+			that.append("/* RootVar's for UI elements (note: not edit manually) */");
+			that.append("<br>");
+			/* выводим rootVar'ы */
+			UIElementsOptions.forEach(function(option) {
+				that.append("String " + option.rootVar + " = \"" + option.value + "\";<br>");
+			});
+			if (UIUserFunctions.length > 0)
+			{
+				/* выводим пользовательские функции */
+				that.append("<br>");
+				that.append("/* User functions: */");
+				UIUserFunctions.forEach(function(functionName) {
+					if (functionName.substring(0, 14) != "LayerFunction_")
+					{
+						that.append("<br>");
+						that.append("void " + functionName + "(String* rootVar) {");
+						that.append("<br>");
+						that.append("<br>");
+						that.append("}");
+						that.append("<br>");
+					}
+				});
+			}
+			UILayers.forEach(function(layer) {
+				that.append("<br>");
+				that.append("/* Function for layer " + layer + ": */");
+				that.append("<br>");
+				that.append("void LayerFunction_" + layer + "(String* rootVar) {");
+				that.append("<br>");
+				that.append("&nbsp;/* UI Elements */");
+				that.append("<br>");
+				/* выводим все элементы данного слоя */
+				UIElementsOptions.forEach(function(option) {
+					if (option.layer == layer)
+					{
+						that.append("&nbsp;");
+						var class_ = (option.rootVar).split("_")[0];
+						that.append(class_);
+						that.append("(");
+						// получаем массив свойств для конкретного элемента
+						var signature = (option.signature).split(",");
+						signature.forEach(function(p) {
+							var p_ = p.split(" ");
+							var t = p_[0];
+							var n = p_[1];
+							var x = eval("option." + n);
+
+							if (t == "String")
+							{
+								that.append("\"" + x + "\",");
+							}
+							else if (t == "String*")
+							{
+								that.append("&" + x);
+							}
+							else if (t == "pFuncStrP")
+							{
+								if (x !== "0")
+								{
+									that.append(x + ",");
+								}
+								else
+								{
+									that.append("0,");
+								}
+							}
+							else if (t == "uint16_t*")
+							{
+								if (x !== "0")
+								{
+									that.append("(uint16_t*)"+ x + ",");
+								}
+							}
+							else 
+							{
+								that.append(x + ",");
+							}
+						});
+						that.append(");<br>");
+						// выводим Enter, привязанный к элементу, если имеется привязка
+						if ((option.Enter != "0") && (option.Enter != ""))
+						{
+							that.append("&nbsp;UIEnter = " + option.Enter + ";<br>");
+						}
+					}	
+				});
+				that.append("&nbsp;/* To open this layer use: */");
+				that.append("<br>");
+				that.append("&nbsp;UILayer(\"" + layer + "\");");
+				that.append("<br>");
+				that.append("}");
+				that.append("<br>");
+			});
+
+			that.append("<br>");
+			that.append("void setup() {");
+			that.append("<br>");
+			that.append("&nbsp;/* Prepare M5STACK */");
+			that.append("<br>");
+		 	that.append("&nbsp;M5.begin();");
+		 	that.append("<br>");
+		 	that.append("<br>");
+		 	that.append("&nbsp;/* Prepare Wire for FACES */");
+		 	that.append("<br>");
+		 	that.append("&nbsp;Wire.begin();");
+		 	that.append("<br>");
+		 	that.append("&nbsp;pinMode(KEYBOARD_INT, INPUT_PULLUP);");
+		 	that.append("<br>");
+		 	that.append("<br>");
+		 	that.append("&nbsp;/* Prepare user's I/O. For example pinMode(5, OUTPUT); */");	
+			that.append("<br>");
+		 	that.append("<br>");
+		 	that.append("&nbsp;/* Prepare UI */");
+		 	that.append("<br>");
+		 	that.append("&nbsp;UIBegin();");		
+			that.append("<br>");
+			that.append("&nbsp;LayerFunction_default(0);");
+			that.append("<br>");
+			that.append("}");
+			that.append("<br>");
+			that.append("<br>");
+			that.append("void loop() { }");
+    	}
+
+    	function functions(functionName, action) {
+    		if (action == "add")
+    		{
+				var New = 1;
+				$("#userFunctions option").each(function(){
+					if (this.text == functionName)
+					{
+						$("#userFunctions").val(functionName);
+						$("#properties-callback").val(functionName);
+						$("#properties-Enter").val(functionName);
+						New = 0;
+					}
+				});
+				if (New)
+				{
+					$("#userFunctions").prepend("<option data-FM=\"\">" + functionName + "</option>");
+					$("#properties-callback").prepend("<option>" + functionName + "</option>");
+					$("#properties-Enter").prepend("<option>" + functionName + "</option>");
+				}
+    		}
+    		else if (action == "remove")
+    		{
+    			$("#userFunctions option:contains(" + functionName + ")").remove();
+    			$("#properties-callback option:contains(" + functionName + ")").remove();
+    			$("#properties-callback").val("0");
+    			$("#properties-Enter option:contains(" + functionName + ")").remove();
+    			// удаляем со свойств всех добавленных элементов
+				$("#m5_screen article").each(function(){
+					var id = $(this).attr("id");
+					var callback = getOption(id, "callback");
+					var Enter = getOption(id, "Enter");
+					if (callback == functionName)
+					{
+						setOption(id, "callback", "0");
+					}
+					if (Enter == functionName)
+					{
+						setOption(id, "Enter", "0");
+					}
+				});
+    		}
+    		FM();
+    		ShowSouce();
+    	}
+
+    	function FM() {
+    		if ($("#userFunctions").val())
+    		{
+    			$("#FM-area li").css("display", "none"); // скрываем все
+    			var FMList = $("#userFunctions :selected").attr("data-FM"); // список функц. модулей для функции
+    			var FMListArray = FMList.split("&");
+				for (var i = 0; i < FMList.length; i++) {
+    				var id = FMListArray[i];
+    				if (id)
+    				{
+    					var hid = "#" + id.replace("[]=", "_");
+	    				$(hid).css("display", "block");
+    				}
+    			}
+    			$("#FM").show();
+    		}
+    		else
+    		{
+    			$("#FM").hide();
+    		}
+    	}
+
+    	// пока beta проверим брауз
+    	if (navigator.userAgent.indexOf("Chrome") == -1)
+    	{
+    		$("body").empty();
+    		$("body").text("Sorry.. Beta only supports Chrome browser :(");
+    	}
+    </script>
+</body>
+</html>
