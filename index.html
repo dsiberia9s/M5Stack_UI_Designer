@@ -529,7 +529,7 @@
 							}
 							else if (t == "uint16_t*")
 							{
-								if (x !== "0")
+								if ((x !== "0") && (x !== ""))
 								{
 									that.append("(uint16_t*)"+ x + ",");
 								}
