@@ -52,6 +52,7 @@ $.widget("namespace.UIInputbox", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -208,6 +209,7 @@ $.widget("namespace.UITextbox", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -376,6 +378,7 @@ $.widget("namespace.UIWaitingbar", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -519,6 +522,7 @@ $.widget("namespace.UIProgressbar", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -718,6 +722,7 @@ $.widget("namespace.UISelectbox", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -890,6 +895,7 @@ $.widget("namespace.UICheckbox", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -1061,6 +1067,7 @@ $.widget("namespace.UIButton", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
@@ -1272,6 +1279,7 @@ $.widget("namespace.UIRangebox", {
 		
 		// делаем элемент подвиждным
 		element.draggable({
+			grid: [4, 4],
 			revert: "invalid", // чтоб копию за пределами экрана не кидали
 			cursor: "move",
 			drag: function(event, ui) {
