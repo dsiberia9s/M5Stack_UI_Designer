@@ -1039,16 +1039,12 @@ $.widget("namespace.UIButton", {
 		element.css("width", properties.width);
 		element.css("height", properties.height);
 
-		// добавляем иконку, если требуется
-		if ((properties.icon != "0") && (properties.icon != ""))
-		{
-			$("<div>", {class: (class_ + "-icon")}).appendTo(element);
-		}
-		$("<div>", {class: (class_ + "-caption"), text: properties.caption}).appendTo(element); 
+		$("<div>", {class: (class_ + "-icon")}).appendTo(element);
+		$("<div>", {class: (class_ + "-caption"), text: properties.caption}).appendTo(element);
 
-		this._setOption("caption", properties.caption);
 		this._setOption("icon", properties.icon);
-
+		this._setOption("caption", properties.caption);
+		
 		// заготовке доп. свойства не нужны - выходим
 		if (properties.blank_) 
 			return; 
@@ -1191,8 +1187,17 @@ $.widget("namespace.UIButton", {
 		else if (key === "icon")
 		{
 			properties[key] = value;
-			var src = "images/IconsLib/" + properties.icon + ".bmp";
-			$(element).find("." + class_ + "-icon").css("backgroundImage", "url(\"" + src + "\")");
+			if (properties[key] != "")
+			{
+				var src = "images/IconsLib/" + properties.icon + ".bmp";
+				$(element).find("." + class_ + "-icon").css("backgroundImage", "url(\"" + src + "\")");
+				$(element).find("." + class_ + "-icon").css("display", "block");
+			}
+			else
+			{
+				$(element).find("." + class_ + "-icon").css("display", "none");
+			}
+			this._setOption("caption", properties.caption);
 			element.trigger("eventFamily", [widget, properties]); // показать свойства
 		}
 
